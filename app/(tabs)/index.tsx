@@ -1,3 +1,4 @@
+import { useRouter } from 'expo-router';
 import { ScrollView, View } from 'react-native';
 import Animated, { FadeIn } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -10,6 +11,7 @@ import { useUser } from '@/context/UserContext';
 export default function HomeScreen() {
   const insets = useSafeAreaInsets();
   const { userName } = useUser();
+  const router = useRouter();
 
   return (
     <ThemedView className="flex-1">
@@ -37,7 +39,7 @@ export default function HomeScreen() {
           <MenuButton
             icon="camera.viewfinder"
             label="Scan Board"
-            onPress={() => {}}
+            onPress={() => router.push('/(tabs)/scan')}
             delay={500}
           />
         </View>
