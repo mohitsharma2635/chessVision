@@ -6,14 +6,26 @@ import 'react-native-reanimated';
 
 import { ThemeProvider, useTheme } from '@/context/ThemeContext';
 import { UserProvider } from '@/context/UserContext';
+import { AuthProvider, useAuth } from '@/context/AuthContext';
 
 function AppContent() {
   const { currentTheme } = useTheme();
+  const { isAuthenticated, isLoading } = useAuth();
+
+  if (isLoading) {
+    return null; // You could add a loading screen here
+  }
 
   return (
     <>
-      <Stack>
+      <Stack
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
+        <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="auth" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
       </Stack>
       <StatusBar style={currentTheme === 'dark' ? 'light' : 'dark'} />
@@ -34,7 +46,9 @@ export default function RootLayout() {
   return (
     <ThemeProvider>
       <UserProvider>
-        <NavigationContentWrapper />
+        <AuthProvider>
+          <NavigationContentWrapper />
+        </AuthProvider>
       </UserProvider>
     </ThemeProvider>
   );

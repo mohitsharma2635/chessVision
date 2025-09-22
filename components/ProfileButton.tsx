@@ -1,6 +1,6 @@
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, ViewStyle } from 'react-native';
 import { ThemedText } from './ThemedText';
 import { IconSymbol } from './ui/IconSymbol';
 
@@ -9,9 +9,10 @@ interface ProfileButtonProps {
   label: string;
   onPress: () => void;
   showChevron?: boolean;
+  style?: ViewStyle;
 }
 
-export function ProfileButton({ icon, label, onPress, showChevron = true }: ProfileButtonProps) {
+export function ProfileButton({ icon, label, onPress, showChevron = true, style }: ProfileButtonProps) {
   const theme = useColorScheme() ?? 'light';
   const bgColor = theme === 'light' ? 'bg-white' : 'bg-gray-800';
   const borderColor = theme === 'light' ? 'border-gray-100' : 'border-gray-700';
@@ -20,13 +21,16 @@ export function ProfileButton({ icon, label, onPress, showChevron = true }: Prof
     <TouchableOpacity
       onPress={onPress}
       className={`${bgColor} ${borderColor} flex-row items-center p-4 rounded-2xl border mb-3 shadow-sm`}
-      style={{
-        shadowColor: theme === 'light' ? '#000000' : '#ffffff',
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-        shadowOffset: { width: 0, height: 2 },
-        elevation: 3,
-      }}>
+      style={[
+        {
+          shadowColor: theme === 'light' ? '#000000' : '#ffffff',
+          shadowOpacity: 0.1,
+          shadowRadius: 4,
+          shadowOffset: { width: 0, height: 2 },
+          elevation: 3,
+        },
+        style,
+      ]}>
       <IconSymbol
         name={icon as any}
         size={24}
